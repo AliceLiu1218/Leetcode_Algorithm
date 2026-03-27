@@ -7,7 +7,7 @@ public class LinkedList_Practice {
 		
 		//constructor
 		public ListNode() {
-			this.val = null;
+			this.val = 0;
 			this.next = null;
 		}
 		
@@ -139,6 +139,45 @@ public class LinkedList_Practice {
     }
 	
 	//LC86 Partition Linked List
+	//https://leetcode.com/problems/partition-list/?envType=problem-list-v2&envId=linked-list
+	public ListNode partition(ListNode head, int x) {
+        //don't change relative relation
+        ListNode large = null;
+        ListNode small = null;
+        ListNode curr = head;
+        ListNode pre = null;
+        ListNode res = null;
+        if(head == null || head.next == null){
+            return head;
+        }
 
-
+        while(curr != null){
+            if (curr.val < x){
+                if (small == null){
+                    small = curr;
+                    res = small;
+                }else{
+                    small.next = curr;
+                    small = curr;   
+                }
+            }else{
+                if (large == null){
+                    large = curr;
+                    pre = large;
+                }else{
+                    large.next = curr;
+                    large = curr;     
+                }
+            }
+            curr = curr.next;
+        }
+        if(small == null || large == null){
+            return head;
+        }
+        
+        small.next = null;
+        large.next = null;
+        small.next = pre;
+        return res;
+    }
 }
